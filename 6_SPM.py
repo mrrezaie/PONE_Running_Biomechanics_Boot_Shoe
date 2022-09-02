@@ -25,8 +25,8 @@ for i in ['s05', 's06', 's13']:
     except:
         pass
 
-parent = 'E:\\MMMMM'
-demo = pd.read_csv(os.path.join(parent, 'demographics.csv'), index_col=0)
+parent = os.path.join(os.getcwd(), 'collate')
+demo = pd.read_csv(os.path.join(os.getcwd(), 'demographics.csv'), index_col=0)
 
 def default():
     ax.plot(np.mean(b,axis=0), label='boot', color='darkblue', lw=2, ls='solid')
@@ -58,7 +58,7 @@ def annotate(spmi, thr=0.5):
 
 
 # %%
-grf = pd.read_pickle('E:\\MMMMM\\collate\\grf.zip')
+grf = pd.read_pickle(os.path.join(parent, 'grf.zip'))
 title = ['Anterior-Posterior', 'Vertical', 'Medial-Lateral']
 plt.close('all')
 plt.figure(figsize=(15,5), tight_layout=True)
@@ -68,8 +68,8 @@ for ii,i in enumerate(['x', 'y', 'z']):
     b = list()
     s = list()
     for j in subj:
-        b.append(grf[i][j]['boot'].mean(axis=1).values / demo['mass'].loc[j]*g)
-        s.append(grf[i][j]['shoe'].mean(axis=1).values / demo['mass'].loc[j]*g)
+        b.append(grf[i][j]['boot'].mean(axis=1).values / (demo['mass'].loc[j]*g))
+        s.append(grf[i][j]['shoe'].mean(axis=1).values / (demo['mass'].loc[j]*g))
         # b.append(grf[i][j]['boot'].mean(axis=1).values)
         # s.append(grf[i][j]['shoe'].mean(axis=1).values)
         # plt.figure(j)
@@ -89,7 +89,7 @@ for ii,i in enumerate(['x', 'y', 'z']):
     if ii == 2:
         ax.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
 
-plt.savefig('E:\\MMMMM\\collate\\grf.png', dpi=300, bbox_inches='tight')
+plt.savefig(os.path.join(parent, 'grf.png'), dpi=300, bbox_inches='tight')
 #
 # 
 # 
@@ -133,8 +133,8 @@ plt.savefig('E:\\MMMMM\\collate\\grf.png', dpi=300, bbox_inches='tight')
 # %%
 bt = 35.52
 st = 36
-jointIpsi = pd.read_pickle('E:\\MMMMM\\collate\\jointi.zip')
-jointContra = pd.read_pickle('E:\\MMMMM\\collate\\jointc.zip')
+jointIpsi = pd.read_pickle(os.path.join(parent, 'jointi.zip'))
+jointContra = pd.read_pickle(os.path.join(parent, 'jointc.zip'))
 jointLabel = ['hip_flexion', 'hip_adduction', 'hip_rotation', 'knee_angle', 'ankle_angle', 'subtalar_angle'] #'lumbar_extension', 'lumbar_bending', 'lumbar_rotation', 
 title = ['Hip Flexion(+)', 'Hip Adduction(+)', 'Hip Internal Rotation(+)', 'Knee Flexion (+)', 'Ankle Dorsiflexion (+)', 'Subtalar Supination (+)']
 plt.close('all')
@@ -174,7 +174,7 @@ for ii,i in enumerate(jointLabel):
     if ii == 2:
         ax.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
 
-plt.savefig('E:\\MMMMM\\collate\\joint.png', dpi=300, bbox_inches='tight')
+plt.savefig(os.path.join(parent, 'joint.png'), dpi=300, bbox_inches='tight')
 # plt.show()
 # 
 # 
@@ -184,8 +184,8 @@ plt.savefig('E:\\MMMMM\\collate\\joint.png', dpi=300, bbox_inches='tight')
 # %%
 bt = 35.52
 st = 36
-velIpsi = pd.read_pickle('E:\\MMMMM\\collate\\veli.zip')
-velContra = pd.read_pickle('E:\\MMMMM\\collate\\velc.zip')
+velIpsi = pd.read_pickle(os.path.join(parent, 'veli.zip'))
+velContra = pd.read_pickle(os.path.join(parent, 'velc.zip'))
 velLabel = ['hip_flexion', 'hip_adduction', 'hip_rotation', 'knee_angle', 'ankle_angle', 'subtalar_angle'] #'lumbar_extension', 'lumbar_bending', 'lumbar_rotation', 
 title = ['Hip Flexion(+)', 'Hip Adduction(+)', 'Hip Internal Rotation(+)', 'Knee Flexion (+)', 'Ankle Dorsiflexion (+)', 'Subtalar Supination (+)']
 plt.close('all')
@@ -225,7 +225,7 @@ for ii,i in enumerate(velLabel):
     if ii == 2:
         ax.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
 
-plt.savefig('E:\\MMMMM\\collate\\vel.png', dpi=300, bbox_inches='tight')
+plt.savefig(os.path.join(parent, 'vel.png'), dpi=300, bbox_inches='tight')
 # plt.show()
 # 
 # 
@@ -233,8 +233,8 @@ plt.savefig('E:\\MMMMM\\collate\\vel.png', dpi=300, bbox_inches='tight')
 # 
 # 
 # %%
-bodyIpsi = pd.read_pickle('E:\\MMMMM\\collate\\bodyi.zip')
-bodyContra = pd.read_pickle('E:\\MMMMM\\collate\\bodyc.zip')
+bodyIpsi = pd.read_pickle(os.path.join(parent, 'bodyi.zip'))
+bodyContra = pd.read_pickle(os.path.join(parent, 'bodyc.zip'))
 bodyLabel = ['torso_Ox', 'torso_Oy', 'torso_Oz','pelvis_Ox', 'pelvis_Oy', 'pelvis_Oz', 'femur_Ox','femur_Oy','femur_Oz','tibia_Ox','tibia_Oy','tibia_Oz','calcn_Ox','calcn_Oy','calcn_Oz'] 
 plt.close('all')
 plt.figure(figsize=(15,20), tight_layout=True)
@@ -265,14 +265,14 @@ for ii,i in enumerate(bodyLabel):
     if ii == 2:
         ax.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
 
-plt.savefig('E:\\MMMMM\\collate\\body.png', dpi=300, bbox_inches='tight')
+plt.savefig(os.path.join(parent, 'body.png'), dpi=300, bbox_inches='tight')
 # 
 # 
 # 
 # 
 # 
 # %%
-moment = pd.read_pickle('E:\\MMMMM\\collate\\moment.zip')
+moment = pd.read_pickle(os.path.join(parent, 'moment.zip'))
 momentLabel = ['hip_flexion', 'hip_adduction', 'hip_rotation', 'knee_angle', 'knee_add', 'knee_rot', 'ankle_angle', 'subtalar_angle']# 'lumbar_extension', 'lumbar_bending', 'lumbar_rotation',
 title = ['Hip Flexor(+)', 'Hip Adductor(+)', 'Hip Internal Rotator(+)', 'Knee Flexor (+)', 'Knee Adductor (+)', 'Knee Internal Rotator (+)', 'Ankle Dorsiflexor (+)', 'Subtalar Supinator (+)']
 plt.close('all')
@@ -289,10 +289,10 @@ for ii,i in enumerate(momentLabel):
         # plt.plot(moment[i][j]['boot'].values, color='b')
         # plt.plot(moment[i][j]['shoe'].values, color='r')
         # plt.show()
-    plt.figure(i)
-    plt.plot(np.transpose(b), color='b', lw=1)
-    plt.plot(np.transpose(s), color='r', lw=1)
-    plt.show()
+    # plt.figure(i)
+    # plt.plot(np.transpose(b), color='b', lw=1)
+    # plt.plot(np.transpose(s), color='r', lw=1)
+    # plt.show()
     spm = spm1d.stats.ttest_paired(b, s)
     spmi = spm.inference(alpha=alpha_P, two_tailed=tt)
     # plot
@@ -306,14 +306,14 @@ for ii,i in enumerate(momentLabel):
     if ii == 2:
         ax.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
 
-plt.savefig('E:\\MMMMM\\collate\\moment.png', dpi=300, bbox_inches='tight')
+plt.savefig(os.path.join(parent, 'moment.png'), dpi=300, bbox_inches='tight')
 # 
 # 
 # 
 # 
 # 
 # %%
-power = pd.read_pickle('E:\\MMMMM\\collate\\power.zip')
+power = pd.read_pickle(os.path.join(parent, 'power.zip'))
 plt.close('all')
 plt.figure(figsize=(15,9.25), tight_layout=True)
 plt.suptitle('Joint Power', fontsize=21, fontweight='bold')
@@ -342,13 +342,13 @@ for ii,i in enumerate(['hip_flexion', 'knee', 'ankle', 'hip_adduction']):
         ax.legend(bbox_to_anchor=(1.05, 1), loc='upper left', borderaxespad=0.)
     del spm, spmi
 # plt.show(block=False)
-plt.savefig('E:\\MMMMM\\collate\\power.png', dpi=300, bbox_inches='tight')
+plt.savefig(os.path.join(parent, 'power.png'), dpi=300, bbox_inches='tight')
 # 
 # 
 # 
 # 
 # %%
-TD = pd.read_pickle('E:\\MMMMM\\collate\\TD.zip')
+TD = pd.read_pickle(os.path.join(parent, 'TD.zip'))
 tdLabel = ['velocity', 'stance', 'swing', 'flight', 'step', 'stride', 'stepWidth', 'stepLength', 'strideLength', 'flightLength','strideHeight']
 result = dict()
 
@@ -377,49 +377,3 @@ np.std(60/np.array(b))
 np.mean(60/np.array(s))
 np.std(60/np.array(s))
 stats.ttest_rel(60/np.array(b), 60/np.array(s))
-
-
-
-
-# %%
-grf = pd.read_pickle('E:\\MMMMM\\collate\\grf.zip')
-frame = 25# int(15/1000*2000) # 25 ms to frame
-outilr = dict({'boot':list(), 'shoe':list()})
-for i in subj:
-    w = demo['mass'].loc[i]*g
-    for j in ['boot', 'shoe']:
-        trialilr = list()
-        for k in ['T1', 'T2', 'T3', 'T4']:
-            direc = os.path.join(parent, i, j, k)
-            forces = readOsimExp(os.path.join(direc, 'exp', f'{i}_{j}_{k}_forces.mot'))
-            y = forces['ground_force_1_vy'].values# / (demo['mass'].loc[i]*g)
-            # y = y[y>400]
-            # lr = y[frame]-y[0] / 0.025 # loading rate
-            # trial.append(lr/ (demo['mass'].loc[i]*g))
-            y = y[y>0] # force plate contact only
-            # plt.close('all')
-            # plt.plot(y)
-            # plt.title(f'{i}_{j}_{k}')
-            # plt.show()
-            # y = y[:int(0.13*len(y))]
-            y = y[0:int(0.05*2000)+1] # first 50 ms 
-            # keep between 20% and 80%
-            y = y[np.logical_and(y>0.2*np.max(y), y<0.8*np.max(y))]
-            # y = y[y>0.2*np.max(y)]
-            # lr = (np.max(y)-np.min(y)) / (len(y)/2000) # loading rate
-            # lr = (y[frame]-y[0])/0.0125
-            # trial.append(lr/ (demo['mass'].loc[i]*g))
-            # y = y / (demo['mass'].loc[i]*g)
-            # y = y[y>100/(demo['mass'].loc[i]*g)]
-            # lr = (y[25]-y[0])/(25/2000)
-            # trial.append(lr)
-            ilr = np.max(np.diff(y)) / w
-            trialilr.append(ilr / (1/2000))
-        outilr[j].append(np.mean(trialilr))
-stats.ttest_rel(np.array(outilr['boot']), np.array(outilr['shoe']))
-# np.mean(outilr['boot'])
-# np.std(outilr['boot'])
-# np.mean(outilr['shoe'])
-# np.std(outilr['shoe'])
-# plt.plot(y)
-# plt.show()
