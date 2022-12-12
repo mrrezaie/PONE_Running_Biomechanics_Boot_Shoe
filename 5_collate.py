@@ -16,7 +16,7 @@ for i in ['s05', 's06']:
     except:
         pass
 
-parent = 'E:\\MMMMM'
+parent = os.getcwd()
 demo = pd.read_csv(os.path.join(parent, 'demographics.csv'), index_col=0)
 g = 9.80665
 speedRef = 12 # Km/h
@@ -87,6 +87,10 @@ for i in subj:
                     td[x[0]] = [float(x[y]) for y in range(1, len(x))]
             for label in tdLabel:
                 TD.loc[:,(label,i,j,k)] = td[label][0]
+            # sides
+            s = demo['side'].loc[i][0]
+            if s=='r': s2='l'
+            elif s =='l': s2=='r'
             # FILES
             # static = readOsimExp(os.path.join(parent, i, j, 'static', f'{i}_{j}_static_position.mot'))
             forces = readOsimExp(os.path.join(direc, 'exp', f'{i}_{j}_{k}_forces.mot'))
@@ -99,7 +103,10 @@ for i in subj:
             # ###############################################################################
             r = np.where(forces['ground_force_1_vy']>0)[0]
             for label in grfLabel:
-                grf.loc[:, (label,i,j,k)] = interp(forces[f'ground_force_1_v{label}'][r[0]:r[-1]+1])
+                if s == 'l' and label == 'z':
+                    grf.loc[:, (label,i,j,k)] = interp(-1*forces[f'ground_force_1_v{label}'][r[0]:r[-1]+1])
+                else:
+                    grf.loc[:, (label,i,j,k)] = interp(forces[f'ground_force_1_v{label}'][r[0]:r[-1]+1])
             # ###############################################################################
             # events
             # ###############################################################################
@@ -108,12 +115,6 @@ for i in subj:
                 a = csv.reader(f, delimiter='\t')
                 for x in a:
                     e[x[0]] = int(x[1])
-            # ###############################################################################
-            # sides
-            # ###############################################################################
-            s = demo['side'].loc[i][0]
-            if s=='r': s2='l'
-            elif s =='l': s2=='r'
             # ###############################################################################
             # joints angle
             # ###############################################################################
