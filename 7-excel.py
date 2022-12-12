@@ -31,8 +31,8 @@ for i in grfLabel:
 	grf2=pd.DataFrame(index=range(101), columns=[level1, level2, level3])
 	for j in subj:
 		for k in ['boot', 'shoe']:
-			grf2.loc[:,(j,k,'mean')] = grf[i][j][k].mean(axis=1).values / demo['mass'].loc[j]*g
-			grf2.loc[:,(j,k,'std')] = grf[i][j][k].std(axis=1).values / demo['mass'].loc[j]*g
+			grf2.loc[:,(j,k,'mean')] = grf[i][j][k].mean(axis=1).values / (demo['mass'].loc[j]*g)
+			grf2.loc[:,(j,k,'std')] = grf[i][j][k].std(axis=1).values / (demo['mass'].loc[j]*g)
 	grf2.to_excel(writer, sheet_name=i)
 writer.close() 
 
